@@ -18,49 +18,50 @@ var server = http.createServer(function(req, res){
         {
             french:'aimer',
             english:'love'
+        },
+        {
+            french:'parler',
+            english:'speak'
+        },
+        {
+            french:'danser',
+            english:'dance'
+        },
+        {
+            french:'chanter',
+            english:'sing'
         }
     ]
 
     var letter = '';
     req.on('data',function(chunk){
-        letter = chunk.toString().trim();
+        letter = chunk.toString().toLowerCase().trim()
 
-       
-        const translate = dicoTable.find(function(item){
-            return item.french === letter || item.english ===  letter
-            
-        })
+        dicoTable.forEach(element=>{
+            const translate = dicoTable.find(function(item){
+                return item.french === letter || item.english ===  letter 
+            })
 
-        if(translate){   
-            const letterIndex = dicoTable.findIndex(function(element){
-                return element === translate
-            }) 
-            console.log(translate)
-            res.end(translate.english)            
-        }
+            if(!translate){   
+                res.end(res.end('Mot pas disponible')) 
+            }
 
-        res.end(
-            res.end('Mot pas disponible')
-        )   
-    })
+            if(element.french === letter){
 
+                console.log(translate)
+                res.end(translate.english) 
+
+            }else if(element.english == letter){
+
+                console.log(translate)
+                res.end(translate.french)
+
+            }            
+       })
+           
+    }) 
 
 });
 server.listen(8030, function(){
     console.log("Server is running at 8030");
 })
- 
-
-
-/* if(dicoTableItem){  
-    const letterIndex = dicoTable.findIndex(function(element){
-        return element === dicoTableItem
-    }) 
-
-    if(letterIndex !== -1){
-        var translate = dicoTable[letterIndex === 1 ? 0 : 0]
-        res.end(translate)   
-    }
-}
- */
-
