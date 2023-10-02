@@ -25,12 +25,17 @@ var server = http.createServer(function(req, res){
     req.on('data',function(chunk){
         letter = chunk.toString().trim();
 
+       
         const translate = dicoTable.find(function(item){
-            return item.french ===  letter 
+            return item.french === letter || item.english ===  letter
+            
         })
 
         if(translate){   
-            console.log(translate.french)
+            const letterIndex = dicoTable.findIndex(function(element){
+                return element === translate
+            }) 
+            console.log(translate)
             res.end(translate.english)            
         }
 
@@ -47,5 +52,15 @@ server.listen(8030, function(){
  
 
 
+/* if(dicoTableItem){  
+    const letterIndex = dicoTable.findIndex(function(element){
+        return element === dicoTableItem
+    }) 
 
+    if(letterIndex !== -1){
+        var translate = dicoTable[letterIndex === 1 ? 0 : 0]
+        res.end(translate)   
+    }
+}
+ */
 
