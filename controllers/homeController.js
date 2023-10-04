@@ -1,13 +1,26 @@
-const http = require('http');
-var server = require('./server')
-/* var server = http.createServer(function(req, res){
-    res.writeHead(200,{
+
+
+const index = (req, res)=>{
+    res.end('Welcome to homepage');
+};
+
+const about = (req, res)=>{
+    res.end('This is about page')
+};
+
+const contact = (req,res)=>{
+    res.end('This is contact page')
+}
+
+const translate = (req, res)=>{
+    //res.end('This is the translate page')
+   res.writeHead(200,{
         "Content-Type":"application/string",
         Accept:"application/string"
     });
 
-    var dicoTable = require('./dico').TableDICO
-    //var filterFunction = require('./dico').setword
+    var dicoTable = require('../dico').TableDICO
+    var filterFunction = require('../dico').setword
 
     var letter = '';
     var translate;
@@ -16,7 +29,7 @@ var server = require('./server')
 
     })
 
-    var getword = require('./dico').exword
+    //var getword = require('./dico').exword
     req.on('end', 
     function(){
         dicoTable.forEach(element=>{
@@ -45,15 +58,8 @@ var server = require('./server')
 
             }            
         })
-    } 
+    } )
 
-   
+}
 
-    )
-        
-           
-}); */
-
-server.listen(8030, function(){
-    console.log("Server is running at 8030");
-})
+module.exports = {index, about, contact, translate}
